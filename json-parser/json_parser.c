@@ -3,13 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "utils.h"
+#include "headers/utils.h"
+#include "headers/constants.h"
 
-#define MAX_FILENAME_SIZE 30
-#define MAX_KEY_NO 10
-#define MAX_KEY_SIZE 50
-#define MAX_VAL_SIZE 100
-
+/*
+ * struct for JSON key-value pair
+ */
 typedef struct
 {
     char key[MAX_KEY_SIZE];
@@ -57,6 +56,9 @@ void parse_json(const char *json)
     }
 }
 
+/*
+ * read json file name form user
+ */
 void read_json_file_name() {
     char file_name[MAX_FILENAME_SIZE];
     printf("Enter JSON file name[max 30 characters]: \n");
@@ -71,7 +73,7 @@ void read_json_file_name() {
         if (strlen(file_name) > MAX_FILENAME_SIZE - 1) {
             printf("Filename is too long!");
         } else {
-            //start processing
+            //start processing JSON
             char *json_str = read_file(file_name);
             parse_json(remove_spaces(json_str));
         }
@@ -81,6 +83,10 @@ void read_json_file_name() {
     }
 }
 
+/*
+ * take user input
+ * process input
+ */
 void start_app() {
     printf("*************WELCOME************\n");
     printf("................................\n");
@@ -96,7 +102,7 @@ void start_app() {
         switch (user_input)
         {
         case 0:
-            char *file_content = read_file("help.txt");
+            char *file_content = read_file("config/help.txt");
             printf(file_content);
             printf("\n");
             break;

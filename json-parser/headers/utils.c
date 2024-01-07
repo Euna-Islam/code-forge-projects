@@ -1,9 +1,12 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "utils.h"
+#include "constants.h"
 
-#define MAX_JSON_SIZE 100
+
 /*
  * remove spaces and new lines from the json content
  */
