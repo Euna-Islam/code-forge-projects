@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define MAX_FILENAME_SIZE 30
 #define MAX_JSON_SIZE 100
 #define MAX_KEY_NO 10
 #define MAX_KEY_SIZE 50
@@ -37,9 +38,9 @@ char *remove_spaces(char *str)
 /*
  * read json file
  */
-char *read_file()
+char *read_file(char *json_file)
 {
-    const char *json_file = "source.json";
+    //const char *json_file = "source.json";
     FILE *file = fopen(json_file, "r");
     if (file == NULL)
     {
@@ -67,6 +68,8 @@ char *read_file()
  */
 void parse_json(const char *json)
 {
+    printf("The json content from file : \n");
+    printf("................................\n");
     key_value_pair json_data[MAX_KEY_NO];
     int key_count = 0;
 
@@ -100,9 +103,40 @@ void parse_json(const char *json)
     }
 }
 
+void read_file_name() {
+    char file_name[MAX_FILENAME_SIZE];
+    printf("Enter JSON file name[max 30 characters]: \n");
+
+    if(fgets(file_name, sizeof(file_name), stdin) != NULL) {
+        size_t name_len = strlen(file_name);
+
+        if(name_len > 0 && file_name[name_len - 1] == '\n') {
+            file_name[name_len - 1] = '\0';
+        }
+
+        if (strlen(file_name) > MAX_FILENAME_SIZE - 1) {
+            printf("Filename is too long!");
+        } else {
+            //start processing
+            char *json_str = read_file(file_name);
+            parse_json(json_str);
+        }
+    } else {
+        printf("Error reading input");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void start_app() {
+    printf("*************WELCOME************\n");
+    printf("................................\n");
+    while(1) {
+        read_file_name();
+    }
+}
+
 int main()
 {
-    char *json_str = read_file();
-    parse_json(json_str);
+    start_app();
     return 0;
 }
